@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 /**
  * A user of the application
+ * 
+ * @version 0.1
+ * @author Taj Okonkwo
  */
 public class User {
 	
