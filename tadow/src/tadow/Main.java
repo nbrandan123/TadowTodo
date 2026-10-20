@@ -17,6 +17,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JTree;
 import javax.swing.JToolBar;
 
+// Working within Taj Okonkwo's branch
 public class Main {
 
 	private JFrame frame;
