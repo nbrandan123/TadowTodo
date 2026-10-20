@@ -1,5 +1,7 @@
 package tadow;
 
+import java.util.ArrayList;
+
 public class Task {
 	String tTitle;					// Title of the task
 	String tDesc;					// Description of the task
