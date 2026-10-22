@@ -52,16 +52,6 @@ class TestUser {
 	}
 
 	@Test
-	void testIsAdmin() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testSetAdmin() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	void testGetProfilePic() {
 		fail("Not yet implemented");
 	}
