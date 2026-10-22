@@ -65,5 +65,62 @@ public class User {
 	public void signUp(String user, String pass) {
 		
 	}
+	
+	// Getters and Setters
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public BufferedImage getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(BufferedImage profilePic) {
+		this.profilePic = profilePic;
+	}
+
+	public String getPreferences() {
+		return preferences;
+	}
+
+	public void setPreferences(String preferences) {
+		this.preferences = preferences;
+	}
+
+	public ArrayList<TDList> getToDoLists() {
+		return toDoLists;
+	}
+
+	public void setToDoLists(ArrayList<TDList> toDoLists) {
+		this.toDoLists = toDoLists;
+	}
 
 }
