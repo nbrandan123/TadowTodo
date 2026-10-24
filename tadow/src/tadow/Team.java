@@ -60,6 +60,10 @@ public class Team {
 		/* This rest of this part will need to be programmed once SQLite database is set up
 		 */
 	}
+	public boolean isAdmin(User u) {
+		return teamAdmins.contains(u);
+	}
+
 	
 
 }
