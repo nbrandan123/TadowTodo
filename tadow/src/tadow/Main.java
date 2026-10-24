@@ -53,10 +53,10 @@ public class Main {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 813, 460);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new CardLayout(0, 0));
+		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel cardLogin = new JPanel();
-		frame.getContentPane().add(cardLogin, "name_880818453325800");
+		frame.getContentPane().add(cardLogin);
 		cardLogin.setLayout(null);
 		
 		JLabel lblLoginTitle = new JLabel("Tadow");
@@ -94,7 +94,7 @@ public class Main {
 		cardLogin.add(btnSignUp);
 		
 		JPanel cardMain = new JPanel();
-		frame.getContentPane().add(cardMain, "name_880945250427400");
+		frame.getContentPane().add(cardMain);
 		cardMain.setLayout(new BorderLayout(4, 0));
 		
 		JScrollPane paneLeft = new JScrollPane();
