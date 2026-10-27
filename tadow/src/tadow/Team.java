@@ -5,11 +5,13 @@ import java.util.ArrayList;
 
 public class Team {
 	
+	// Data Members
 	private String teamName;
 	private ArrayList<User> teamUsers;
 	private ArrayList<User> teamAdmins;
 	
 	
+	// Constructors
 	/* Scenario A: creating a new team with no other members
 	 * Important note: a team can't get created without members in this model. When a user creates a team they get
 	 * added to the team as its first member and admin.
@@ -29,6 +31,7 @@ public class Team {
 	    this.teamAdmins = admins;
 	}
 
+	// Getters and Setters
 	public ArrayList<User> getTeamUsers() {
 		return teamUsers;
 	}

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Task {
+	
+	// Data Methods
 	private String tTitle;					// Title of the task
 	private String tDesc;					// Description of the task
 	private Date tDate;					// Due date of the task
@@ -12,10 +14,12 @@ public class Task {
 	private String repInterval;
 	private ArrayList<String> tComments;	// Additional comments/notes for the task
 	
+	// Constructors
 	public Task(String tTitle) {
 		this.tTitle = tTitle;
 	}
 
+	// Getters and Setters
 	public String gettTitle() {
 		return tTitle;
 	}

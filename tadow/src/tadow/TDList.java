@@ -4,17 +4,20 @@ import java.util.ArrayList;
 
 public class TDList {
 	
+	// Data Members
 	private ArrayList<Task> tdList;
 	private String lTitle;
 	private String lDesc;
 	private boolean shared;
 	private Team team;
 	
+	// Constructors
 	public TDList(String title) {
 		this.tdList = new ArrayList<Task>();
 		this.lTitle = title;
 	}
 
+	// Getters and Setters
 	public ArrayList<Task> getTdList() {
 		return tdList;
 	}
