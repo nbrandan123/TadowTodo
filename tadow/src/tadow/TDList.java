@@ -33,7 +33,19 @@ public class TDList {
 	public void setlDesc(String lDesc) {
 		this.lDesc = lDesc;
 	}
-	
+	public boolean isShared() {
+		return shared;
+	}
+	public void setShared(boolean shared) {
+		this.shared = shared;
+	}
+	public Team getTeam() {
+		return team;
+	}
+	public void setTeam(Team team) {
+		this.team = team;
+	}
+
 	public void addTask(Task t) {
 		tdList.add(t);
 	}
