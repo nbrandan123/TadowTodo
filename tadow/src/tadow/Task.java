@@ -1,11 +1,12 @@
 package tadow;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Task {
 	private String tTitle;					// Title of the task
 	private String tDesc;					// Description of the task
-	private String tDate;					// Due date of the task
+	private Date tDate;					// Due date of the task
 	private int tStat;						// 0 = Not Started, 1 = In Progress, 2 = Completed
 	private boolean isRep = false;			// Is the task a repeating task?
 	private String repInterval;
@@ -27,10 +28,10 @@ public class Task {
 	public void settDesc(String tDesc) {
 		this.tDesc = tDesc;
 	}
-	public String gettDate() {
+	public Date gettDate() {
 		return tDate;
 	}
-	public void settDate(String tDate) {
+	public void settDate(Date tDate) {
 		this.tDate = tDate;
 	}
 	public int gettStat() {
