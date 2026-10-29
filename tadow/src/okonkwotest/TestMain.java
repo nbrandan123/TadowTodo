@@ -6,6 +6,12 @@ import org.junit.jupiter.api.Test;
 
 import tadow.Main;
 
+/**
+ * A test class for {@code Main}
+ * <p>Comments, documentation, and code generated in part by GitHub Copilot</p>
+ * @author Taj Okonkwo
+ * @version 0.1
+ */
 class TestMain {
 
 	@Test

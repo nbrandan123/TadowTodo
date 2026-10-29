@@ -4,6 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * A test class for {@code User}
+ * <p>Comments, documentation, and code generated in part by GitHub Copilot</p>
+ * @author Taj Okonkwo
+ * @version 0.1
+ */
 class TestUser {
 
 	@Test
