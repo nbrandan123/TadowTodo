@@ -7,7 +7,7 @@ public class TDList {
 	// Data Members
 	private ArrayList<Task> tdList;
 	private String lTitle;
-	private String lDesc;
+	private String lDesc = "";
 	private boolean shared;
 	private Team team;
 	
@@ -49,6 +49,21 @@ public class TDList {
 	public void finTask(Task t) {
 		t.settStat(2);
 	}
-	
+
+	public boolean isShared() {
+		return shared;
+	}
+
+	public void setShared(boolean shared) {
+		this.shared = shared;
+	}
+
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
+	}
 
 }

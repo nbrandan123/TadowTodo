@@ -2,7 +2,13 @@ package okonkwotest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
+
+import tadow.TDList;
+import tadow.Task;
+import tadow.Team;
 
 /**
  * A test class for {@code TDList}
@@ -14,47 +20,107 @@ class TestTDList {
 
 	@Test
 	void testTDList() {
-		fail("Not yet implemented");
+		// 1. Instantiate to-do list
+		TDList list = new TDList("Test List");
+		
+		// 2. Assert that the to-do list is empty
+		assertTrue(list.getTdList().isEmpty());
 	}
 
 	@Test
 	void testGetTdList() {
-		fail("Not yet implemented");
+		// 1. Instantiate to-do list
+		TDList list = new TDList("Test List");
+		
+		// 2. Assert that the to-do list is empty
+		assertTrue(list.getTdList().isEmpty());
 	}
 
 	@Test
 	void testSetTdList() {
-		fail("Not yet implemented");
+		// 1. Instantiate to-do list
+		TDList list = new TDList("Test List");
+		
+		// 2. Add tasks
+		ArrayList<Task> tasks = new ArrayList<>();
+		tasks.add(new Task("Task 1"));
+		tasks.add(new Task("Task 2"));
+		tasks.add(new Task("Task 3"));
+		list.setTdList(tasks);
+		
+		// 3. Assert that the to-do list is new
+		assertEquals(tasks, list.getTdList());
 	}
 
 	@Test
 	void testGetlTitle() {
-		fail("Not yet implemented");
+		// 1. Instantiate to-do list
+		TDList list = new TDList("Test List");
+		
+		// 2. Assert that the title is set from the constructor
+		assertEquals("Test List", list.getlTitle());
 	}
 
 	@Test
 	void testSetlTitle() {
-		fail("Not yet implemented");
+		// 1. Instantiate to-do list
+		TDList list = new TDList("Test List");
+		
+		// 2. Set title
+		list.setlTitle("Test List 2");
+		
+		// 3. Assert that the title is set from the constructor
+		assertEquals("Test List 2", list.getlTitle());
 	}
 
 	@Test
 	void testGetlDesc() {
-		fail("Not yet implemented");
+		// 1. Instantiate to-do list
+		TDList list = new TDList("Test List");
+		
+		// 2. Assert that the description is empty
+		assertEquals("", list.getlDesc());
 	}
 
 	@Test
 	void testSetlDesc() {
-		fail("Not yet implemented");
+		// 1. Instantiate to-do list
+		TDList list = new TDList("Test List");
+		
+		// 2. Set new description
+		list.setlDesc("Desc");
+		
+		// 2. Assert that the description is empty
+		assertEquals("Desc", list.getlDesc());
 	}
 
 	@Test
 	void testAddTask() {
-		fail("Not yet implemented");
+		// 1. Instantiate to-do list
+		TDList list = new TDList("Test List");
+		
+		// 2. Add task
+		Task task = new Task("Test Task");
+		list.addTask(task);
+		
+		// 3. Assert that list contains task
+		assertTrue(list.getTdList().contains(task));
 	}
 
 	@Test
 	void testDelTask() {
-		fail("Not yet implemented");
+		// 1. Instantiate to-do list
+		TDList list = new TDList("Test List");
+		
+		// 2. Add task
+		Task task = new Task("Test Task");
+		list.addTask(task);
+		
+		// 3. Remove task
+		list.delTask(task);
+		
+		// 4. Assert that list doesn't contain task
+		assertFalse(list.getTdList().contains(task));
 	}
 
 	@Test
@@ -64,7 +130,61 @@ class TestTDList {
 
 	@Test
 	void testFinTask() {
-		fail("Not yet implemented");
+		// 1. Instantiate to-do list
+		TDList list = new TDList("Test List");
+		
+		// 2. Add task
+		Task task = new Task("Test Task");
+		list.addTask(task);
+		
+		// 3. Complete task
+		list.finTask(task);
+		
+		// 4. Assert that task is completed
+		assertEquals(2, task.gettStat());
+	}
+	
+	@Test
+	void testIsShared() {
+		// 1. Instantiate to-do list
+		TDList list = new TDList("Test List");
+		
+		// 2. Assert the list is not shared
+		assertFalse(list.isShared());
+	}
+	
+	@Test
+	void testSetShared() {
+		// 1. Instantiate to-do list
+		TDList list = new TDList("Test List");
+		
+		// 2. Set the share status
+		list.setShared(true);
+		
+		// 3. Assert the list is shared
+		assertTrue(list.isShared());
+	}
+	
+	@Test
+	void testGetTeam() {
+		// 1. Instantiate to-do list
+		TDList list = new TDList("Test List");
+		
+		// 2. Assert that no team is set
+		assertNull(list.getTeam());
+	}
+	
+	@Test
+	void testSetTeam() {
+		// 1. Instantiate to-do list
+		TDList list = new TDList("Test List");
+		
+		// 2. Set new team
+		Team team = new Team("Test Team", new ArrayList<>(), new ArrayList<>());
+		list.setTeam(team);
+		
+		// 3. Assert that team is set
+		assertEquals(team, list.getTeam());
 	}
 
 }

@@ -16,6 +16,11 @@ import javax.swing.JList;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JTree;
 import javax.swing.JToolBar;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JMenuBar;
 
 public class Main {
 
@@ -195,6 +200,21 @@ public class Main {
 	public JPanel getCardMain() {
 		return cardMain;
 	}
-	
-	
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
 }
