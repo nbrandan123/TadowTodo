@@ -21,6 +21,8 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JMenuBar;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Main {
 
@@ -34,6 +36,7 @@ public class Main {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		SQLite.connect();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -111,10 +114,24 @@ public class Main {
 		cardLogin.add(txtLoginPW);
 		
 		JButton btnLogin = new JButton("Login");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (SQLite.login(txtLoginUN.getText(), txtLoginPW.getText())); {
+					cardLogin.setVisible(false);
+					cardMain.setVisible(true);
+				}
+				
+			}
+		});
 		btnLogin.setBounds(328, 218, 110, 27);
 		cardLogin.add(btnLogin);
 		
 		JButton btnSignUp = new JButton("Sign Up");
+		btnSignUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SQLite.signup(txtLoginUN.getText(), txtLoginPW.getText());
+			}
+		});
 		btnSignUp.setBounds(328, 251, 110, 27);
 		cardLogin.add(btnSignUp);
 	}
