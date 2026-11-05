@@ -119,6 +119,7 @@ public class Main {
 				if (SQLite.login(txtLoginUN.getText(), txtLoginPW.getText())); {
 					cardLogin.setVisible(false);
 					cardMain.setVisible(true);
+					frame.getContentPane().add(cardMain);
 				}
 				
 			}
