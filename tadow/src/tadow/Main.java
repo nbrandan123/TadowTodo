@@ -116,7 +116,7 @@ public class Main {
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (SQLite.login(txtLoginUN.getText(), txtLoginPW.getText())); {
+				if (SQLite.login(txtLoginUN.getText(), txtLoginPW.getText())) {
 					cardLogin.setVisible(false);
 					cardMain.setVisible(true);
 					frame.getContentPane().add(cardMain);
