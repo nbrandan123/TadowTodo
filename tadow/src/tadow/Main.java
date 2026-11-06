@@ -23,6 +23,13 @@ import java.awt.event.MouseEvent;
 import javax.swing.JMenuBar;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.awt.GridLayout;
+import javax.swing.JSeparator;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class Main {
 
@@ -66,12 +73,13 @@ public class Main {
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		// Login Card
-		initLoginCard();
+		//initLoginCard();
 		
 		// Main Card
 		initMainCard();
 		
 		frame.getContentPane().add(cardLogin);
+		
 		cardLogin.setVisible(true); // Enable login window by default
 		cardMain.setVisible(false); // Disable main window by default
 	}
@@ -103,6 +111,10 @@ public class Main {
 		lblLoginPW.setBounds(418, 118, 94, 35);
 		cardLogin.add(lblLoginPW);
 		
+		JLabel lblSignupStatus = new JLabel("");
+		lblSignupStatus.setBounds(278, 289, 222, 14);
+		cardLogin.add(lblSignupStatus);
+		
 		txtLoginUN = new JTextField();
 		txtLoginUN.setBounds(220, 151, 126, 27);
 		cardLogin.add(txtLoginUN);
@@ -120,6 +132,7 @@ public class Main {
 					cardLogin.setVisible(false);
 					cardMain.setVisible(true);
 					frame.getContentPane().add(cardMain);
+					SQLite.getListsForUser(SQLite.UserSession.getUserName());
 				}
 				
 			}
@@ -130,7 +143,12 @@ public class Main {
 		JButton btnSignUp = new JButton("Sign Up");
 		btnSignUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SQLite.signup(txtLoginUN.getText(), txtLoginPW.getText());
+				if (SQLite.signup(txtLoginUN.getText(), txtLoginPW.getText())) {
+					lblSignupStatus.setText("Sign up successful! You can now log in.");
+				}
+				else {
+					lblSignupStatus.setText("Sign up failed! Please try again.");
+				}
 			}
 		});
 		btnSignUp.setBounds(328, 251, 110, 27);
@@ -143,29 +161,62 @@ public class Main {
 		
 		// 2. Instantiate UI
 		cardMain = new JPanel();
-		cardMain.setLayout(new BorderLayout(4, 0));
+		cardMain.setLayout(new BorderLayout(0, 0));
 		
-		JScrollPane paneLeft = new JScrollPane();
-		cardMain.add(paneLeft, BorderLayout.WEST);
+		JPanel gridpanel = new JPanel();
+		cardMain.add(gridpanel, BorderLayout.CENTER);
+		gridpanel.setLayout(new GridLayout(1, 3, 0, 0));
 		
-		JList listOfLists = new JList();
-		paneLeft.setViewportView(listOfLists);
+		JScrollPane scrollPane_left = new JScrollPane();
+		gridpanel.add(scrollPane_left);
 		
-		JScrollPane paneCenter = new JScrollPane();
-		paneCenter.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		cardMain.add(paneCenter, BorderLayout.CENTER);
+		JList<TDList> toDoListsView = new JList<TDList>();
+		scrollPane_left.setViewportView(toDoListsView);
 		
-		JTree taskTree = new JTree();
-		paneCenter.setViewportView(taskTree);
+		JPanel leftHead = new JPanel();
+		scrollPane_left.setColumnHeaderView(leftHead);
+		GridBagLayout gbl_leftHead = new GridBagLayout();
+		gbl_leftHead.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_leftHead.rowHeights = new int[] {0, 0};
+		gbl_leftHead.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_leftHead.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		leftHead.setLayout(gbl_leftHead);
 		
-		JScrollPane paneRight = new JScrollPane();
-		cardMain.add(paneRight, BorderLayout.EAST);
+		JLabel lblLeftHead = new JLabel("To Do Lists");
+		GridBagConstraints gbc_lblLeftHead = new GridBagConstraints();
+		gbc_lblLeftHead.insets = new Insets(0, 0, 0, 5);
+		gbc_lblLeftHead.gridx = 0;
+		gbc_lblLeftHead.gridy = 0;
+		leftHead.add(lblLeftHead, gbc_lblLeftHead);
 		
-		JList taskView = new JList();
-		paneRight.setViewportView(taskView);
+		JButton btnNewList = new JButton("+");
+		btnNewList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NewListPopup newListPopup = new NewListPopup();
+				newListPopup.setVisible(true);
+			}
+		});
+		GridBagConstraints gbc_btnNewList = new GridBagConstraints();
+		gbc_btnNewList.gridwidth = 2;
+		gbc_btnNewList.gridx = 6;
+		gbc_btnNewList.gridy = 0;
+		leftHead.add(btnNewList, gbc_btnNewList);
+		
+		JScrollPane scrollPane_center = new JScrollPane();
+		gridpanel.add(scrollPane_center);
+		
+		JLabel lblCenterHead = new JLabel("Tasks");
+		scrollPane_center.setColumnHeaderView(lblCenterHead);
+		
+		JScrollPane scrollPane_right = new JScrollPane();
+		gridpanel.add(scrollPane_right);
+		
+		JLabel lblRightHead = new JLabel("Details View");
+		scrollPane_right.setColumnHeaderView(lblRightHead);
 		
 		JToolBar toolBar = new JToolBar();
 		cardMain.add(toolBar, BorderLayout.NORTH);
+		
 	}
 	
 	/**
