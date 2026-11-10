@@ -45,7 +45,9 @@ public class Team {
 	}
 
 	public void setTeamAdmins(ArrayList<User> teamAdmins) {
+		teamUsers.removeAll(this.teamAdmins); // Removes old admins
 		this.teamAdmins = teamAdmins;
+		teamUsers.addAll(teamAdmins); // Adds all admins as users
 	}
 
 	public String getTeamName() {

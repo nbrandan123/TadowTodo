@@ -24,7 +24,7 @@ class TestTDList {
 		TDList list = new TDList("Test List");
 		
 		// 2. Assert that the to-do list is empty
-		assertTrue(list.getTdList().isEmpty());
+		assertTrue(list.getTdList().isEmpty(), "To-do list not empty");
 	}
 
 	@Test
@@ -33,7 +33,7 @@ class TestTDList {
 		TDList list = new TDList("Test List");
 		
 		// 2. Assert that the to-do list is empty
-		assertTrue(list.getTdList().isEmpty());
+		assertTrue(list.getTdList().isEmpty(), "To-do list not empty");
 	}
 
 	@Test
@@ -49,7 +49,7 @@ class TestTDList {
 		list.setTdList(tasks);
 		
 		// 3. Assert that the to-do list is new
-		assertEquals(tasks, list.getTdList());
+		assertEquals(tasks, list.getTdList(), "To-do list not as assigned");
 	}
 
 	@Test
@@ -58,7 +58,7 @@ class TestTDList {
 		TDList list = new TDList("Test List");
 		
 		// 2. Assert that the title is set from the constructor
-		assertEquals("Test List", list.getlTitle());
+		assertEquals("Test List", list.getlTitle(), "Title not as assigned");
 	}
 
 	@Test
@@ -70,7 +70,7 @@ class TestTDList {
 		list.setlTitle("Test List 2");
 		
 		// 3. Assert that the title is set from the constructor
-		assertEquals("Test List 2", list.getlTitle());
+		assertEquals("Test List 2", list.getlTitle(), "Title not as assigned");
 	}
 
 	@Test
@@ -79,7 +79,7 @@ class TestTDList {
 		TDList list = new TDList("Test List");
 		
 		// 2. Assert that the description is empty
-		assertEquals("", list.getlDesc());
+		assertEquals("", list.getlDesc(), "Description not as assigned");
 	}
 
 	@Test
@@ -91,7 +91,7 @@ class TestTDList {
 		list.setlDesc("Desc");
 		
 		// 2. Assert that the description is empty
-		assertEquals("Desc", list.getlDesc());
+		assertEquals("Desc", list.getlDesc(), "Description not as assigned");
 	}
 
 	@Test
@@ -104,7 +104,7 @@ class TestTDList {
 		list.addTask(task);
 		
 		// 3. Assert that list contains task
-		assertTrue(list.getTdList().contains(task));
+		assertTrue(list.getTdList().contains(task), "Task not contained");
 	}
 
 	@Test
@@ -120,7 +120,7 @@ class TestTDList {
 		list.delTask(task);
 		
 		// 4. Assert that list doesn't contain task
-		assertFalse(list.getTdList().contains(task));
+		assertFalse(list.getTdList().contains(task), "Task not deleted");
 	}
 
 	@Test
@@ -141,7 +141,7 @@ class TestTDList {
 		list.finTask(task);
 		
 		// 4. Assert that task is completed
-		assertEquals(2, task.gettStat());
+		assertEquals(2, task.gettStat(), "Task not completed");
 	}
 	
 	@Test
@@ -150,7 +150,7 @@ class TestTDList {
 		TDList list = new TDList("Test List");
 		
 		// 2. Assert the list is not shared
-		assertFalse(list.isShared());
+		assertFalse(list.isShared(), "List shared");
 	}
 	
 	@Test
@@ -162,7 +162,7 @@ class TestTDList {
 		list.setShared(true);
 		
 		// 3. Assert the list is shared
-		assertTrue(list.isShared());
+		assertTrue(list.isShared(), "List not shared");
 	}
 	
 	@Test
@@ -171,7 +171,7 @@ class TestTDList {
 		TDList list = new TDList("Test List");
 		
 		// 2. Assert that no team is set
-		assertNull(list.getTeam());
+		assertNull(list.getTeam(), "List has a team");
 	}
 	
 	@Test
@@ -184,7 +184,7 @@ class TestTDList {
 		list.setTeam(team);
 		
 		// 3. Assert that team is set
-		assertEquals(team, list.getTeam());
+		assertEquals(team, list.getTeam(), "List team not as assigned");
 	}
 
 }

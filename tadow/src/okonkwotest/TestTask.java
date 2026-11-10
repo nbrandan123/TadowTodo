@@ -27,7 +27,7 @@ class TestTask {
 		Task task = new Task("Test Task");
 		
 		// 2. Assert that the status is 0
-		assertEquals(0, task.gettStat());
+		assertEquals(0, task.gettStat(), "Status not zero");
 	}
 
 	@Test
@@ -36,7 +36,7 @@ class TestTask {
 		Task task = new Task("Test Task");
 		
 		// 2. Assert that the title is correct from the constructor
-		assertEquals("Test Task", task.gettTitle());
+		assertEquals("Test Task", task.gettTitle(), "Title not as assigned");
 	}
 
 	@Test
@@ -48,7 +48,7 @@ class TestTask {
 		task.settTitle("Test Task 2");
 		
 		// 2. Assert that the title is correct from the constructor
-		assertEquals("Test Task 2", task.gettTitle());
+		assertEquals("Test Task 2", task.gettTitle(), "Title not as assigned");
 	}
 
 	@Test
@@ -59,8 +59,8 @@ class TestTask {
 		// 2. Set new description
 		task.settDesc("This is a test task.");
 		
-		// 2. Assert that the title is correct from the constructor
-		assertEquals("This is a test task.", task.gettDesc());
+		// 2. Assert that the description is correct from the constructor
+		assertEquals("This is a test task.", task.gettDesc(), "Description not as assigned");
 	}
 
 	@Test
@@ -71,8 +71,8 @@ class TestTask {
 		// 2. Set new description
 		task.settDesc("This is a test task.");
 		
-		// 2. Assert that the title is correct from the constructor
-		assertEquals("This is a test task.", task.gettDesc());
+		// 2. Assert that the description is correct from the constructor
+		assertEquals("This is a test task.", task.gettDesc(), "Description not as assigned");
 	}
 
 	@Test
@@ -81,7 +81,7 @@ class TestTask {
 		Task task = new Task("Test Task");
 		
 		// 2. Assert that the date of the task is set
-		assertNotNull(task.gettDate());
+		assertNotNull(task.gettDate(), "Date unassigned");
 	}
 
 	@Test
@@ -94,7 +94,7 @@ class TestTask {
 		task.settDate(myDate);
 		
 		// 2. Assert that the date is set
-		assertEquals(myDate, task.gettDate());
+		assertEquals(myDate, task.gettDate(), "Date not as assigned");
 	}
 
 	@Test
@@ -103,7 +103,7 @@ class TestTask {
 		Task task = new Task("Test Task");
 		
 		// 2. Assert that status is default
-		assertEquals(0, task.gettStat());
+		assertEquals(0, task.gettStat(), "Status not 0");
 	}
 
 	@Test
@@ -115,7 +115,7 @@ class TestTask {
 		task.settStat(1);
 		
 		// 3. Assert that status is the new status
-		assertEquals(1, task.gettStat());
+		assertEquals(1, task.gettStat(), "Status not as assigned");
 	}
 
 	@Test
@@ -124,7 +124,7 @@ class TestTask {
 		Task task = new Task("Test Task");
 		
 		// 2. Assert that repetition status is default
-		assertEquals(false, task.isRep());
+		assertEquals(false, task.isRep(), "Repetition not default");
 	}
 
 	@Test
@@ -136,7 +136,7 @@ class TestTask {
 		task.setRep(true);
 		
 		// 2. Assert that repetition status is new
-		assertEquals(true, task.isRep());
+		assertEquals(true, task.isRep(), "Repetition not as assigned");
 	}
 	
 	@Test
@@ -145,7 +145,7 @@ class TestTask {
 		Task task = new Task("Test Task");
 		
 		// 2. Assert that repetition interval is default
-		assertEquals(new Date(0,0,0), task.getRepInterval());
+		assertEquals(new Date(0,0,0), task.getRepInterval(), "Repetition interval not default");
 	}
 	
 	@Test
@@ -158,7 +158,7 @@ class TestTask {
 		task.setRepInterval(myDate);
 		
 		// 3. Assert that repetition interval is new
-		assertEquals(myDate, task.getRepInterval());
+		assertEquals(myDate, task.getRepInterval(), "Repetition interval not as assigned");
 	}
 
 	@Test
@@ -167,7 +167,7 @@ class TestTask {
 		Task task = new Task("Test Task");
 		
 		// 2. Assert that comments are default
-		assertNotNull(task.gettComments());
+		assertNotNull(task.gettComments(), "Comments not default");
 	}
 
 	@Test
@@ -180,7 +180,7 @@ class TestTask {
 		task.gettComments().add("This is a test comment.");
 		
 		// 3. Assert that comments are new
-		assertEquals(myComments, task.gettComments());
+		assertEquals(myComments, task.gettComments(), "Comments not as assigned");
 	}
 
 }

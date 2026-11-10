@@ -20,8 +20,8 @@ class TestMain {
 		Main main = new Main();
 		
 		// 2. Assert that the application opens with login and not main
-		assertTrue(main.getCardLogin().isVisible());
-		assertFalse(main.getCardMain().isVisible());
+		assertTrue(main.getCardLogin().isVisible(), "Login card not visible");
+		assertFalse(main.getCardMain().isVisible(), "Main card visible");
 	}
 
 }
