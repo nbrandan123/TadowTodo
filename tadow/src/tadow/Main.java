@@ -73,7 +73,7 @@ public class Main {
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		// Login Card
-		//initLoginCard();
+		initLoginCard();
 		
 		// Main Card
 		initMainCard();
@@ -192,8 +192,8 @@ public class Main {
 		JButton btnNewList = new JButton("+");
 		btnNewList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NewListPopup newListPopup = new NewListPopup();
-				newListPopup.setVisible(true);
+				NewListPopup nlp = new NewListPopup();
+				nlp.setVisible(true);
 			}
 		});
 		GridBagConstraints gbc_btnNewList = new GridBagConstraints();
