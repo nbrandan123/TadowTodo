@@ -12,7 +12,7 @@ public class Team {
 	
 	
 	// Constructors
-	/* Scenario A: creating a new team with no other members
+	/** Scenario A: creating a new team with no other members
 	 * Important note: a team can't get created without members in this model. When a user creates a team they get
 	 * added to the team as its first member and admin.
 	 * */
@@ -24,11 +24,15 @@ public class Team {
 	    teamAdmins.add(creator);
 	}
 	
-	//Scenario B: creating a team with existing values from the database
+	/** Scenario B: creating a team with existing values 
+	 * from the database
+	 * */
 	public Team(String teamName, ArrayList<User> users, ArrayList<User> admins) {
 	    this.teamName = teamName;
 	    this.teamUsers = users;
 	    this.teamAdmins = admins;
+	    
+	    users.addAll(admins);
 	}
 
 	// Getters and Setters
@@ -58,9 +62,11 @@ public class Team {
 		this.teamName = teamName;
 	}
 
-	public void joinTeam(User e) {
+	public void joinTeam(User e, boolean asAdmin) {
 		
 		teamUsers.add(e);
+		if (asAdmin)
+			teamAdmins.add(e);
 		
 		/* This rest of this part will need to be programmed once SQLite database is set up
 		 */

@@ -148,6 +148,10 @@ public class SQLite {
 		return loginstatus;
 	}
 	
+	public static boolean removeAccount(String username, String password) {
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
+	
 	public class UserSession {
 	    private static String loggedInUserName;
 

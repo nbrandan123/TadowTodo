@@ -16,7 +16,8 @@ class TestSQLite {
 
 	@Test
 	void testConnect() {
-		fail("Not yet implemented");
+		// 1. Attempt to connect
+		SQLite.connect();
 	}
 
 	@Test
@@ -27,6 +28,7 @@ class TestSQLite {
 		// 2. Assert that a user that does not already exist can sign up
 		fail("Not yet implemented: Assert that a user that does not already exist can sign up");
 		//assertTrue(SQLite.signup("tajokonkwo2", "abc1234"), "Non-existent user not allowed to sign up");
+		//SQLite.removeAccount("tajokonkwo2", "abc1234");
 	}
 
 	@Test

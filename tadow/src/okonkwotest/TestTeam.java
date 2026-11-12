@@ -18,6 +18,9 @@ import tadow.User;
  */
 class TestTeam {
 
+	/**
+	 * Test single-user constructor
+	 */
 	@Test
 	void testTeamStringUser() {
 		// 1. Instantiate team
@@ -29,6 +32,9 @@ class TestTeam {
 		assertEquals(user, team.getTeamUsers().get(0), "Users not as declared");
 	}
 
+	/**
+	 * Test multiple-user constructor
+	 */
 	@Test
 	void testTeamStringArrayListOfUserArrayListOfUser() {
 		// 1. Instantiate team
@@ -44,6 +50,9 @@ class TestTeam {
 		assertTrue(team.getTeamUsers().containsAll(admins));
 	}
 
+	/**
+	 * Test {@code getTeamUsers()} method
+	 */
 	@Test
 	void testGetTeamUsers() {
 		// 1. Instantiate team
@@ -55,12 +64,15 @@ class TestTeam {
 		assertTrue(team.getTeamUsers().isEmpty(), "Users not empty");
 		
 		// 3. Add user
-		team.joinTeam(new User(null, null, null, null, null, null));
+		team.joinTeam(new User(null, null, null, null, null, null), false);
 		
 		// 4. Assert that the users are not empty
 		assertFalse(team.getTeamUsers().isEmpty(), "Users are empty");
 	}
 
+	/**
+	 * Test {@code setTeamUsers()} method
+	 */
 	@Test
 	void testSetTeamUsers() {
 		// 1. Instantiate team
@@ -82,6 +94,9 @@ class TestTeam {
 		assertFalse(team.getTeamUsers().isEmpty(), "Users are empty");
 	}
 
+	/**
+	 * Test {@code getTeamAdmins()} method
+	 */
 	@Test
 	void testGetTeamAdmins() {
 		// 1. Instantiate team
@@ -108,6 +123,9 @@ class TestTeam {
 		assertFalse(team2.getTeamAdmins().containsAll(admins), "Old admins contained");
 	}
 
+	/**
+	 * Test {@code setTeamAdmins()} method
+	 */
 	@Test
 	void testSetTeamAdmins() {
 		// 1. Instantiate team
@@ -134,22 +152,66 @@ class TestTeam {
 
 	@Test
 	void testGetTeamName() {
-		fail("Not yet implemented");
+		// 1. Instantiate team
+		ArrayList<User> users = new ArrayList<>();
+		ArrayList<User> admins = new ArrayList<>();
+		Team team = new Team("My Team", users, admins);
+		
+		// 2. Assert that team name is as assigned
+		assertEquals("My Team", team.getTeamName(), "Team name not as assigned");
 	}
 
 	@Test
 	void testSetTeamName() {
-		fail("Not yet implemented");
+		// 1. Instantiate team
+		ArrayList<User> users = new ArrayList<>();
+		ArrayList<User> admins = new ArrayList<>();
+		Team team = new Team("My Team", users, admins);
+		
+		// 2. Reassign team name
+		team.setTeamName("My Team 2");
+		
+		// 3. Assert that team name is as assigned
+		assertEquals("My Team 2", team.getTeamName(), "Team name not as assigned");
 	}
 
 	@Test
 	void testJoinTeam() {
-		fail("Not yet implemented");
+		// 1. Instantiate team
+		ArrayList<User> users = new ArrayList<>();
+		ArrayList<User> admins = new ArrayList<>();
+		Team team = new Team("My Team", users, admins);
+		
+		// 2. Add new member
+		User newUser = new User("New User", null, null, null, null, null);
+		team.joinTeam(newUser, false);
+		
+		// 3. Assert that new member has been added but not as admin
+		assertTrue(team.getTeamUsers().contains(newUser), "New user not contained");
+		assertFalse(team.isAdmin(newUser), "New user set as admin");
+	
+		// 4. Add new admin
+		User newAdmin = new User("New Admin", null, null, null, null, null);
+		team.joinTeam(newAdmin, true);
+		
+		// 5. Assert that new member has been added
+		assertTrue(team.isAdmin(newAdmin), "New admin not contained");
+		assertTrue(team.getTeamUsers().contains(newAdmin), "New admin not user");
 	}
 
 	@Test
 	void testIsAdmin() {
-		fail("Not yet implemented");
+		// 1. Instantiate team with admin
+		ArrayList<User> users = new ArrayList<>();
+		ArrayList<User> admins = new ArrayList<>();
+		User myAdmin = new User("New Admin", null, null, null, null, null);
+		admins.add(myAdmin);
+		
+		Team team = new Team("My Team", users, admins);
+		
+		// 2. Assert that the user is both an admin and a user
+		assertTrue(team.isAdmin(myAdmin), "New admin not contained");
+		assertTrue(team.getTeamUsers().contains(myAdmin), "New admin not user");
 	}
 
 }
