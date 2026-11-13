@@ -63,6 +63,7 @@ public class SQLite {
      String sqlLists = "CREATE TABLE IF NOT EXISTS lists ("
 			 + "	id INTEGER PRIMARY KEY,"
 			 + "	name TEXT NOT NULL,"
+			 + " 	description TEXT,"
 			 + "	user_id INTEGER NOT NULL,"
 			 + "	FOREIGN KEY(user_id) REFERENCES users(id)"
 			 + ");";
@@ -77,20 +78,20 @@ public class SQLite {
 		}
 	 
 	 // Add description column to the lists table if it doesn't already exist
-	 String sqlDesc = "ALTER TABLE lists ADD COLUMN description TEXT;";
+	 //String sqlDesc = "ALTER TABLE lists ADD COLUMN description TEXT;";
 
-	 try (var conn = DriverManager.getConnection(url);
-		 var stmt = conn.createStatement()) {
-		 stmt.execute(sqlDesc);
-		 System.out.println("Description column added successfully.");
-	 } catch (SQLException e) {
-		 if (e.getMessage().contains("duplicate column name")) {
-			 System.out.println("Description column already exists. Skipping.");
-		 } else {
-			 // Something else went wrong, handle or rethrow it
-			 e.printStackTrace();
-		 }
-	 }
+	 //try (var conn = DriverManager.getConnection(url);
+	//	 var stmt = conn.createStatement()) {
+	//	 stmt.execute(sqlDesc);
+	//	 System.out.println("Description column added successfully.");
+	// } catch (SQLException e) {
+	//	 if (e.getMessage().contains("duplicate column name")) {
+	//		 System.out.println("Description column already exists. Skipping.");
+	//	 } else {
+	//		 // Something else went wrong, handle or rethrow it
+	//		 e.printStackTrace();
+	//	 }
+	// }
 	 
 	 
     }
@@ -170,7 +171,7 @@ public class SQLite {
 		int userID = getUserID(UserSession.getUserName());
 		
 		// SQL statement for inserting list
-		String lsql = "INSERT INTO lists(name,description,user_id) VALUES(?,?)";
+		String lsql = "INSERT INTO lists(name,description,user_id) VALUES(?,?,?)";
 		
 		try (var conn = DriverManager.getConnection(url);
 			var pstmt = conn.prepareStatement(lsql)) {
@@ -223,12 +224,12 @@ public class SQLite {
 			pstmt.setInt(1, userID);
 			var rs = pstmt.executeQuery();
 			
-			// THIS IS CURRENTLY NOT WORKING, NEED TO FIGURE OUT HOW TO GET LISTS FROM DATABASE AND ADD THEM TO THE ARRAYLIST
-			//while (rs.next()) {
-			//	TDList list = new TDList(rs.getString("name"), rs.getString("description"));
-			//	lists.add(list);
-			//}
-			// THIS NEEDS ATTENTION ^
+			while (rs.next()) {
+				TDList list = new TDList(rs.getString("name"));
+				list.setlDesc(rs.getString("description"));
+				lists.add(list);
+			}
+
 			
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());

@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
@@ -38,6 +39,8 @@ public class Main {
 	private JTextField txtLoginPW;
 	private JPanel cardLogin;
 	private JPanel cardMain;
+	// model for JList
+	DefaultListModel<TDList> listModel = new DefaultListModel<>();
 
 	/**
 	 * Launch the application.
@@ -75,13 +78,11 @@ public class Main {
 		// Login Card
 		initLoginCard();
 		
-		// Main Card
-		initMainCard();
 		
 		frame.getContentPane().add(cardLogin);
 		
 		cardLogin.setVisible(true); // Enable login window by default
-		cardMain.setVisible(false); // Disable main window by default
+		
 	}
 	
 	/**
@@ -130,9 +131,20 @@ public class Main {
 			public void actionPerformed(ActionEvent e) {
 				if (SQLite.login(txtLoginUN.getText(), txtLoginPW.getText())) {
 					cardLogin.setVisible(false);
-					cardMain.setVisible(true);
-					frame.getContentPane().add(cardMain);
 					SQLite.getListsForUser(SQLite.UserSession.getUserName());
+					
+					// Set the default model for the JList with the retrieved lists
+					listModel.clear();
+					for (TDList list : SQLite.getListsForUser(SQLite.UserSession.getUserName())) {
+						listModel.addElement(list);
+					}
+					
+					
+					// Main Card
+					initMainCard();
+					frame.getContentPane().add(cardMain);
+					cardMain.setVisible(true);
+					//cardMain.setVisible(false); // Disable main window by default
 				}
 				
 			}
@@ -170,7 +182,9 @@ public class Main {
 		JScrollPane scrollPane_left = new JScrollPane();
 		gridpanel.add(scrollPane_left);
 		
-		JList<TDList> toDoListsView = new JList<TDList>();
+		JList<TDList> toDoListsView = new JList<>(listModel);
+		// Set the model for the JList
+		//toDoListsView.setModel(listModel);
 		scrollPane_left.setViewportView(toDoListsView);
 		
 		JPanel leftHead = new JPanel();
