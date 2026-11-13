@@ -1,8 +1,11 @@
 package tadow;
 
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SQLite {
 	
@@ -161,7 +164,7 @@ public class SQLite {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 	
-	public class UserSession {
+	public static class UserSession {
 	    private static String loggedInUserName;
 
 	    public static void setUserName(String username) {
@@ -318,5 +321,42 @@ public class SQLite {
 		}
 		return tasks;
 	}
+	
+	/**
+	 *
+	 * Call a SQL query on the database
+	 * @param query
+	 * @param args
+	 * @return
+	 * @throws SQLException
+	 */
+	/*private static ResultSet queryDatabase(String query, HashMap<Integer, Object> args) throws SQLException {
+		String url = "jdbc:sqlite:tadow.db";
+		try (var conn = DriverManager.getConnection(url);
+			var pstmt = conn.prepareStatement(query)) {
+			
+			// Set each argument in the query
+			for (Integer i: args.keySet()) {
+				Object val = args.get(i);
+				if (val instanceof Integer)
+					pstmt.setInt(i, (int) val);
+				else if (val instanceof String)
+					pstmt.setString(i, (String) val);
+				else if (val instanceof Double)
+					pstmt.setDouble(i, (double) val);
+				else if (val instanceof Boolean)
+					pstmt.setBoolean(0, (boolean) val);
+				else if (val instanceof Date)
+					pstmt.setDate(0, (Date) val);
+			}
+			
+			var rs = pstmt.executeQuery();
+			
+			return rs;
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return null;
+	}*/
 
 }

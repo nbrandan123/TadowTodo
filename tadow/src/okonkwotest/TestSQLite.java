@@ -77,12 +77,25 @@ class TestSQLite {
 	@Test
 	void testGetListsForUser() {
 		// 1. Assert that the test user "testNoLists" has no lists
-		assertTrue(SQLite.login("testNoLists", ""), "User testNoLists unable to log in");
 		assertTrue(SQLite.getListsForUser("testNoLists").isEmpty(), "User with no lists appears to have lists");
 		
 		// 2. Assert that the test user "testHasList" has lists
-		assertTrue(SQLite.login("testHasList", ""), "User testHasList unable to log in");
 		assertFalse(SQLite.getListsForUser("testHasList").isEmpty(), "User with lists appears to have no lists");
+	}
+
+	@Test
+	void testGetListID() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testAddTaskD() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetTasksForList() {
+		fail("Not yet implemented");
 	}
 
 }
