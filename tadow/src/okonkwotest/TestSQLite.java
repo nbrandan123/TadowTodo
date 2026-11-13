@@ -60,4 +60,29 @@ class TestSQLite {
 		fail("Not yet implemented");
 	}
 
+	@Test
+	void testAddList() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	void testGetUserID() {
+		// 1. Assert that an existing user has non-negative-one user id
+		assertNotEquals(-1, SQLite.getUserID("tajokonkwo"), "Existing user has id -1");
+		
+		// 2. Assert that a non-existent user has -1 as user id
+		assertEquals(-1, SQLite.getUserID("not a user"), "Non-existent user does not have id -1");
+	}
+	
+	@Test
+	void testGetListsForUser() {
+		// 1. Assert that the test user "testNoLists" has no lists
+		assertTrue(SQLite.login("testNoLists", ""), "User testNoLists unable to log in");
+		assertTrue(SQLite.getListsForUser("testNoLists").isEmpty(), "User with no lists appears to have lists");
+		
+		// 2. Assert that the test user "testHasList" has lists
+		assertTrue(SQLite.login("testHasList", ""), "User testHasList unable to log in");
+		assertFalse(SQLite.getListsForUser("testHasList").isEmpty(), "User with lists appears to have no lists");
+	}
+
 }

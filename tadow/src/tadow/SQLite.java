@@ -223,12 +223,11 @@ public class SQLite {
 			pstmt.setInt(1, userID);
 			var rs = pstmt.executeQuery();
 			
-			// THIS IS CURRENTLY NOT WORKING, NEED TO FIGURE OUT HOW TO GET LISTS FROM DATABASE AND ADD THEM TO THE ARRAYLIST
-			//while (rs.next()) {
-			//	TDList list = new TDList(rs.getString("name"), rs.getString("description"));
-			//	lists.add(list);
-			//}
-			// THIS NEEDS ATTENTION ^
+			while (rs.next()) {
+				TDList list = new TDList(rs.getString("name"));
+				list.setlDesc(rs.getString("description"));
+				lists.add(list);
+			}
 			
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
