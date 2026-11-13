@@ -9,7 +9,7 @@ public class Task {
 	private String tTitle; // Title of the task
 	private String tDesc = ""; // Description of the task
 	private Date tDate = new Date(); // Due date of the task
-	private int tStat = 0; // 0 = Not Started, 1 = In Progress, 2 = Completed
+	private int tStat = 0; // 0 = Not Started, 1 = Overdue, 2 = Completed
 	private boolean isRep = false; // Is the task a repeating task?
 	private Date repInterval = new Date(0,0,0);
 	private ArrayList<String> tComments = new ArrayList<>(); // Additional comments/notes for the task

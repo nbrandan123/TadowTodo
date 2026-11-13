@@ -28,6 +28,7 @@ public class SQLite {
         var tablesql = "CREATE TABLE IF NOT EXISTS users ("
                 + "	id INTEGER PRIMARY KEY,"
                 + "	name text NOT NULL,"
+                + " password text NOT NULL,"
                 + "	capacity REAL"
                 + ");";
         
@@ -41,22 +42,22 @@ public class SQLite {
            }
         
 		// Add username and password columns to the users table if they don't already exist
-        String sqlUsername = "ALTER TABLE users ADD COLUMN username TEXT;";
-        String sqlPassword = "ALTER TABLE users ADD COLUMN password TEXT;";
+    //    String sqlUsername = "ALTER TABLE users ADD COLUMN username TEXT;";
+    //    String sqlPassword = "ALTER TABLE users ADD COLUMN password TEXT;";
 
-     try (var conn = DriverManager.getConnection(url);
-         var stmt = conn.createStatement()) {
-         stmt.execute(sqlUsername);
-         stmt.execute(sqlPassword);
-         System.out.println("Username and password columns added successfully.");
-     } catch (SQLException e) {
-    	 if (e.getMessage().contains("duplicate column name")) {
-             System.out.println("Username and Password column already exists. Skipping.");
-         } else {
-             // Something else went wrong, handle or rethrow it
-             e.printStackTrace();
-         }
-     }
+    // try (var conn = DriverManager.getConnection(url);
+    //     var stmt = conn.createStatement()) {
+    //     stmt.execute(sqlUsername);
+    //     stmt.execute(sqlPassword);
+    //     System.out.println("Username and password columns added successfully.");
+    // } catch (SQLException e) {
+    //	 if (e.getMessage().contains("duplicate column name")) {
+     //        System.out.println("Username and Password column already exists. Skipping.");
+     //    } else {
+     //        // Something else went wrong, handle or rethrow it
+     //        e.printStackTrace();
+     //    }
+     //}
      // 																												TO DO LIST TABLE CREATION
      // Create a new table for To Do Lists if it doesn't already exist
      // SQL Statement for creating new table
@@ -76,23 +77,30 @@ public class SQLite {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-	 
-	 // Add description column to the lists table if it doesn't already exist
-	 //String sqlDesc = "ALTER TABLE lists ADD COLUMN description TEXT;";
-
-	 //try (var conn = DriverManager.getConnection(url);
-	//	 var stmt = conn.createStatement()) {
-	//	 stmt.execute(sqlDesc);
-	//	 System.out.println("Description column added successfully.");
-	// } catch (SQLException e) {
-	//	 if (e.getMessage().contains("duplicate column name")) {
-	//		 System.out.println("Description column already exists. Skipping.");
-	//	 } else {
-	//		 // Something else went wrong, handle or rethrow it
-	//		 e.printStackTrace();
-	//	 }
+	
 	// }
 	 
+	// 																												TASK TABLE CREATION
+	 // Create a new table for Tasks if it doesn't already exist
+	 // SQL Statement for creating new table
+	 String sqlTasks = "CREATE TABLE IF NOT EXISTS tasks ("
+			 + "	id INTEGER PRIMARY KEY,"
+			 + "	title TEXT NOT NULL,"
+			 + " 	description TEXT,"
+			 + "	due_date TEXT,"
+			 + "	status INTEGER NOT NULL,"
+			 + "	list_id INTEGER NOT NULL,"
+			 + "	FOREIGN KEY(list_id) REFERENCES lists(id)"
+			 + ");";
+	 // Create table if it doesn't already exist
+	 try (var conn = DriverManager.getConnection(url);
+			 var stmt = conn.createStatement()) {
+		 // create a new table
+		 stmt.execute(sqlTasks);
+	 }
+	 catch (SQLException e) {
+		 System.out.println(e.getMessage());
+	 }
 	 
     }
 	
@@ -164,6 +172,29 @@ public class SQLite {
 	        return loggedInUserName;
 	    }
 	}
+		
+	public static int getUserID(String username) {
+		// This method will return the user ID for a given username
+		int userID = -1;
+		var url = "jdbc:sqlite:tadow.db";
+		
+		// SQL statement for getting user ID
+		String sql = "SELECT id FROM users WHERE name = ?";
+		
+		try (var conn = DriverManager.getConnection(url);
+			var pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, username);
+			var rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				userID = rs.getInt("id");
+			}
+			
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return userID;
+	}
 	
 	public static void addList(TDList list) {
 		// This method will add a new list to the database
@@ -187,28 +218,7 @@ public class SQLite {
 		}
 	}
 	
-	public static int getUserID(String username) {
-		// This method will return the user ID for a given username
-		int userID = -1;
-		var url = "jdbc:sqlite:tadow.db";
-		
-		// SQL statement for getting user ID
-		String sql = "SELECT id FROM users WHERE name = ?";
-		
-		try (var conn = DriverManager.getConnection(url);
-			var pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, username);
-			var rs = pstmt.executeQuery();
-			
-			if (rs.next()) {
-				userID = rs.getInt("id");
-			}
-			
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
-		return userID;
-	}
+
 	
 	public static ArrayList<TDList> getListsForUser(String username) {
 		// This method will return a list of TDList objects for a given username
@@ -235,6 +245,79 @@ public class SQLite {
 			System.err.println(e.getMessage());
 		}
 		return lists;
+	}
+	
+	public static int getListID(TDList list) {
+		// This method will return the list ID for a given TDList object
+		int listID = -1;
+		var url = "jdbc:sqlite:tadow.db";
+		
+		// SQL statement for getting list ID
+		String sql = "SELECT id FROM lists WHERE name = ?";
+		
+		try (var conn = DriverManager.getConnection(url);
+			var pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, list.getlTitle());
+			var rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				listID = rs.getInt("id");
+			}
+			
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return listID;
+	}
+	
+	public static void addTask(Task task, TDList list) {
+		// This method will add a new task to the database
+		var url = "jdbc:sqlite:tadow.db";
+		
+		// SQL statement for inserting task
+		String tsql = "INSERT INTO tasks(title,description,due_date,status,list_id) VALUES(?,?,?,?,?)";
+		
+		try (var conn = DriverManager.getConnection(url);
+			var pstmt = conn.prepareStatement(tsql)) {
+			// insert the new task into the database
+			pstmt.setString(1, task.gettTitle());
+			pstmt.setString(2, task.gettDesc());
+			pstmt.setString(3, task.gettDate().toString());
+			pstmt.setInt(4, task.gettStat());
+			pstmt.setInt(5, getListID(list));
+			pstmt.executeUpdate();
+			System.out.println("Task added successfully!");
+			
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+	}
+	
+	public static ArrayList<Task> getTasksForList(TDList list) {
+		// This method will return a list of Task objects for a given TDList object
+		ArrayList<Task> tasks = new ArrayList<>();
+		var url = "jdbc:sqlite:tadow.db";
+		
+		// SQL statement for getting tasks for a list
+		String sql = "SELECT * FROM tasks WHERE list_id = ?";
+		
+		try (var conn = DriverManager.getConnection(url);
+			var pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, getListID(list));
+			var rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Task task = new Task(rs.getString("title"));
+				task.settDesc(rs.getString("description"));
+				task.settDate(new java.util.Date(rs.getString("due_date")));
+				task.settStat(rs.getInt("status"));
+				tasks.add(task);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return tasks;
 	}
 
 }
