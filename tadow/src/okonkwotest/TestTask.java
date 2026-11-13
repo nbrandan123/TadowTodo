@@ -177,7 +177,8 @@ class TestTask {
 		
 		// 2. Set new comments
 		ArrayList<String> myComments = new ArrayList<String>();
-		task.gettComments().add("This is a test comment.");
+		myComments.add("This is a test comment.");
+		task.settComments(myComments);
 		
 		// 3. Assert that comments are new
 		assertEquals(myComments, task.gettComments(), "Comments not as assigned");

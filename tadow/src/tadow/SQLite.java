@@ -170,7 +170,7 @@ public class SQLite {
 		int userID = getUserID(UserSession.getUserName());
 		
 		// SQL statement for inserting list
-		String lsql = "INSERT INTO lists(name,description,user_id) VALUES(?,?)";
+		String lsql = "INSERT INTO lists(name,description,user_id) VALUES(?,?,?)";
 		
 		try (var conn = DriverManager.getConnection(url);
 			var pstmt = conn.prepareStatement(lsql)) {

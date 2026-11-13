@@ -14,12 +14,18 @@ import tadow.SQLite;
  */
 class TestSQLite {
 
+	/**
+	 * Test the {@code connect()} method
+	 */
 	@Test
 	void testConnect() {
 		// 1. Attempt to connect
 		SQLite.connect();
 	}
 
+	/**
+	 * Test the {@code signup()} method
+	 */
 	@Test
 	void testSignup() {
 		// 1. Assert that a user that already exists cannot sign up
@@ -31,6 +37,9 @@ class TestSQLite {
 		//SQLite.removeAccount("tajokonkwo2", "abc1234");
 	}
 
+	/**
+	 * Test the {@code login()} method
+	 */
 	@Test
 	void testLogin() {
 		// 1. Assert that a false login results in failed connection
@@ -41,6 +50,14 @@ class TestSQLite {
 
 		// 3. Assert case-sensitivity
 		assertFalse(SQLite.login("tajOkonkwo", "abc123"), "Case-insensitive username and/or password");
+	}
+	
+	/**
+	 * Test the {@code removeAccount()} method
+	 */
+	@Test
+	void testRemoveAccount() {
+		fail("Not yet implemented");
 	}
 
 }
