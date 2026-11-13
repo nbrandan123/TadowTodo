@@ -65,5 +65,10 @@ public class TDList {
 	public void setTeam(Team team) {
 		this.team = team;
 	}
+	
+    @Override
+    public String toString() {
+        return lTitle; // This will display the title of the list in the JList
+    }
 
 }

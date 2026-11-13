@@ -100,6 +100,9 @@ public class NewListPopup extends JDialog {
 						
 						// Send new list to database
 						SQLite.addList(newList);
+						
+						// Close the popup
+						dispose();
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -108,6 +111,11 @@ public class NewListPopup extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
