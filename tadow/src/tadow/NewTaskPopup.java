@@ -151,7 +151,7 @@ public class NewTaskPopup extends JDialog {
 			{
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
+					public void actionPerformed(ActionEvent e) {						
 						String taskTitle = textTaskTitle.getText();
 						String taskDesc = textTaskDesc.getText();
 						String dueDateStr = textDueDate.getText();
@@ -159,6 +159,8 @@ public class NewTaskPopup extends JDialog {
 						Task newTask = new Task(taskTitle);
 						newTask.settDesc(taskDesc);
 						newTask.settDate(dueDateStr);
+						
+						SQLite.addTask(newTask, Main.getSelectedList());
 					}
 				});
 				okButton.setActionCommand("OK");

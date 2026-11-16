@@ -309,7 +309,7 @@ public class SQLite {
 			while (rs.next()) {
 				Task task = new Task(rs.getString("title"));
 				task.settDesc(rs.getString("description"));
-				task.settDate(new java.util.Date(rs.getString("due_date")));
+				task.settDate(rs.getString("due_date"));
 				task.settStat(rs.getInt("status"));
 				tasks.add(task);
 			}

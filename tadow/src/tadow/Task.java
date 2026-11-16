@@ -36,11 +36,11 @@ public class Task {
 		this.tDesc = tDesc;
 	}
 
-	public Date gettDate() {
+	public String gettDate() {
 		return tDate;
 	}
 
-	public void settDate(Date tDate) {
+	public void settDate(String tDate) {
 		this.tDate = tDate;
 	}
 
