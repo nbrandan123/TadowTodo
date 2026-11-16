@@ -84,9 +84,9 @@ public class Main {
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		// Login Card
-		//initLoginCard();
+		initLoginCard();
 		// TEMPORARY to edit display
-		initMainCard();
+		//initMainCard();
 		
 		frame.getContentPane().add(cardLogin);
 		
@@ -197,7 +197,7 @@ public class Main {
 				if (!e.getValueIsAdjusting()) {
 					TDList selectedList = toDoListsView.getSelectedValue();
 					if (selectedList != null) {
-						System.out.println("Selected list: " + selectedList.getlTitle());
+						String selListTitle = selectedList.getlTitle();
 						// Here you can update the tasks view based on the selected list
 					}
 				}
@@ -270,6 +270,8 @@ public class Main {
 		JButton btnNewTask = new JButton("+");
 		btnNewTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				NewTaskPopup ntp = new NewTaskPopup();
+				ntp.setVisible(true);
 			}
 		});
 		GridBagConstraints gbc_btnNewTask = new GridBagConstraints();
@@ -282,8 +284,6 @@ public class Main {
 		JButton btnEditTask = new JButton("Edit");
 		btnEditTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NewTaskPopup ntp = new NewTaskPopup();
-				ntp.setVisible(true);
 			}
 		});
 		GridBagConstraints gbc_btnEditTask = new GridBagConstraints();

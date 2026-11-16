@@ -152,6 +152,13 @@ public class NewTaskPopup extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						String taskTitle = textTaskTitle.getText();
+						String taskDesc = textTaskDesc.getText();
+						String dueDateStr = textDueDate.getText();
+						
+						Task newTask = new Task(taskTitle);
+						newTask.settDesc(taskDesc);
+						newTask.settDate(dueDateStr);
 					}
 				});
 				okButton.setActionCommand("OK");
