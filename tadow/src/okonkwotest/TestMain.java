@@ -23,7 +23,5 @@ class TestMain {
 		assertTrue(main.getCardLogin().isVisible(), "Login card not visible");
 		assertFalse(main.getCardMain().isVisible(), "Main card visible");
 	}
-	
-	// TODO Add more test case methods
 
 }

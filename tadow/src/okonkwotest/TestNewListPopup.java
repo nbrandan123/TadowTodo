@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import tadow.Main;
 import tadow.NewListPopup;
 
 /**
@@ -14,19 +15,13 @@ import tadow.NewListPopup;
  */
 class TestNewListPopup {
 
-	//@Test
-	/*void testMain() {
-		fail("Not yet implemented");
-	}*/
-
 	/**
 	 * Test the constructor
 	 */
 	@Test
 	void testNewListPopup() {
-		
+		// 1. Attempt to open up the popup
+		NewListPopup popup = new NewListPopup((new Main()).getFrame(), null, null);
 	}
-	
-	// TODO Add new test case methods
 
 }
