@@ -9,14 +9,15 @@ import java.util.HashMap;
 
 public class SQLite {
 	
+	private static final String DB_URL = "jdbc:sqlite:tadow.db";
+	
 	public static void connect() {
 		//																												DATABASE CREATION
 		// This method will create a new database if it does not exist, otherwise connects to the existing database
         // connection string
-        var url = "jdbc:sqlite:tadow.db";
         
         // Attempt to connect/create database
-        try (var conn = DriverManager.getConnection(url)) {
+        try (var conn = DriverManager.getConnection(DB_URL)) {
         	if (conn != null) {
                 var meta = conn.getMetaData();
                 System.out.println("The driver name is " + meta.getDriverName());
@@ -36,7 +37,7 @@ public class SQLite {
                 + ");";
         
         // create a new table if it doesn't already exist
-        try (var conn = DriverManager.getConnection(url);
+        try (var conn = DriverManager.getConnection(DB_URL);
                 var stmt = conn.createStatement()) {
                // create a new table
                stmt.execute(tablesql);
@@ -73,7 +74,7 @@ public class SQLite {
 			 + ");";
      
      // Create table if it doesn't already exist
-	 try (var conn = DriverManager.getConnection(url);
+	 try (var conn = DriverManager.getConnection(DB_URL);
 			 var stmt = conn.createStatement()) {
 			// create a new table
 			stmt.execute(sqlLists);
@@ -96,7 +97,7 @@ public class SQLite {
 			 + "	FOREIGN KEY(list_id) REFERENCES lists(id)"
 			 + ");";
 	 // Create table if it doesn't already exist
-	 try (var conn = DriverManager.getConnection(url);
+	 try (var conn = DriverManager.getConnection(DB_URL);
 			 var stmt = conn.createStatement()) {
 		 // create a new table
 		 stmt.execute(sqlTasks);
@@ -109,13 +110,12 @@ public class SQLite {
 	
 	public static boolean signup(String username, String password) {
 		// Connect to the database
-		var url = "jdbc:sqlite:tadow.db";
 		boolean signupstatus = false;
 
         // SQL statement for inserting user
         String udatasql = "INSERT INTO users(name,password) VALUES(?,?)";
         
-        try (var conn = DriverManager.getConnection(url);
+        try (var conn = DriverManager.getConnection(DB_URL);
             var pstmt = conn.prepareStatement(udatasql)) {
         	// insert the new user into the database
         	pstmt.setString(1, username);
@@ -133,19 +133,17 @@ public class SQLite {
 		// This method will check if the user exists in the database
 		boolean loginstatus = false;
 		// database connection string
-		var url = "jdbc:sqlite:tadow.db";
 		
 		// SQL statement for checking user
 		String lsql = "SELECT * FROM users WHERE name = ? AND password = ?";
 		
-		try (var conn = DriverManager.getConnection(url);
-			var pstmt = conn.prepareStatement(lsql)) {
-			// check if the user exists in the database
-			pstmt.setString(1, username);
-			pstmt.setString(2, password);
-			var rs = pstmt.executeQuery();
+		try {
+			HashMap<Integer, Object> args = new HashMap<>();
+			args.put(1, username);
+			args.put(2, password);
+			var rs = queryDatabase(lsql, args);
 			
-			if (rs.next()) {
+			if (!rs.isEmpty()) {
 				System.out.println("Login successful!");
 				loginstatus = true;
 				// Set the logged-in user's name in the UserSession
@@ -179,12 +177,11 @@ public class SQLite {
 	public static int getUserID(String username) {
 		// This method will return the user ID for a given username
 		int userID = -1;
-		var url = "jdbc:sqlite:tadow.db";
 		
 		// SQL statement for getting user ID
 		String sql = "SELECT id FROM users WHERE name = ?";
 		
-		try (var conn = DriverManager.getConnection(url);
+		try (var conn = DriverManager.getConnection(DB_URL);
 			var pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, username);
 			var rs = pstmt.executeQuery();
@@ -201,13 +198,12 @@ public class SQLite {
 	
 	public static void addList(TDList list) {
 		// This method will add a new list to the database
-		var url = "jdbc:sqlite:tadow.db";
 		int userID = getUserID(UserSession.getUserName());
 		
 		// SQL statement for inserting list
 		String lsql = "INSERT INTO lists(name,description,user_id) VALUES(?,?,?)";
 		
-		try (var conn = DriverManager.getConnection(url);
+		try (var conn = DriverManager.getConnection(DB_URL);
 			var pstmt = conn.prepareStatement(lsql)) {
 			// insert the new list into the database
 			pstmt.setString(1, list.getlTitle());
@@ -226,13 +222,12 @@ public class SQLite {
 	public static ArrayList<TDList> getListsForUser(String username) {
 		// This method will return a list of TDList objects for a given username
 		ArrayList<TDList> lists = new ArrayList<>();
-		var url = "jdbc:sqlite:tadow.db";
 		int userID = getUserID(username);
 		
 		// SQL statement for getting lists for a user
 		String sql = "SELECT * FROM lists WHERE user_id = ?";
 		
-		try (var conn = DriverManager.getConnection(url);
+		try (var conn = DriverManager.getConnection(DB_URL);
 			var pstmt = conn.prepareStatement(sql)) {
 			pstmt.setInt(1, userID);
 			var rs = pstmt.executeQuery();
@@ -252,12 +247,11 @@ public class SQLite {
 	public static int getListID(TDList list) {
 		// This method will return the list ID for a given TDList object
 		int listID = -1;
-		var url = "jdbc:sqlite:tadow.db";
 		
 		// SQL statement for getting list ID
 		String sql = "SELECT id FROM lists WHERE name = ?";
 		
-		try (var conn = DriverManager.getConnection(url);
+		try (var conn = DriverManager.getConnection(DB_URL);
 			var pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, list.getlTitle());
 			var rs = pstmt.executeQuery();
@@ -274,12 +268,11 @@ public class SQLite {
 	
 	public static void addTask(Task task, TDList list) {
 		// This method will add a new task to the database
-		var url = "jdbc:sqlite:tadow.db";
 		
 		// SQL statement for inserting task
 		String tsql = "INSERT INTO tasks(title,description,due_date,status,list_id) VALUES(?,?,?,?,?)";
 		
-		try (var conn = DriverManager.getConnection(url);
+		try (var conn = DriverManager.getConnection(DB_URL);
 			var pstmt = conn.prepareStatement(tsql)) {
 			// insert the new task into the database
 			pstmt.setString(1, task.gettTitle());
@@ -298,12 +291,11 @@ public class SQLite {
 	public static ArrayList<Task> getTasksForList(TDList list) {
 		// This method will return a list of Task objects for a given TDList object
 		ArrayList<Task> tasks = new ArrayList<>();
-		var url = "jdbc:sqlite:tadow.db";
 		
 		// SQL statement for getting tasks for a list
 		String sql = "SELECT * FROM tasks WHERE list_id = ?";
 		
-		try (var conn = DriverManager.getConnection(url);
+		try (var conn = DriverManager.getConnection(DB_URL);
 			var pstmt = conn.prepareStatement(sql)) {
 			pstmt.setInt(1, getListID(list));
 			var rs = pstmt.executeQuery();
@@ -330,9 +322,8 @@ public class SQLite {
 	 * @return
 	 * @throws SQLException
 	 */
-	/*private static ResultSet queryDatabase(String query, HashMap<Integer, Object> args) throws SQLException {
-		String url = "jdbc:sqlite:tadow.db";
-		try (var conn = DriverManager.getConnection(url);
+	private static ArrayList<Object> queryDatabase(String query, HashMap<Integer, Object> args) throws SQLException {
+		try (var conn = DriverManager.getConnection(DB_URL);
 			var pstmt = conn.prepareStatement(query)) {
 			
 			// Set each argument in the query
@@ -351,12 +342,32 @@ public class SQLite {
 			}
 			
 			var rs = pstmt.executeQuery();
+			var results = new ArrayList<Object>();
 			
-			return rs;
+			int i = 1;
+			while (rs.next()) {
+				Object val = rs.getObject(i);
+				if (val instanceof Integer)
+					results.add(rs.getInt(i));
+				else if (val instanceof String)
+					results.add(rs.getString(i));
+				else if (val instanceof Double)
+					results.add(rs.getDouble(i));
+				else if (val instanceof Boolean)
+					results.add(rs.getBoolean(i));
+				else if (val instanceof Date)
+					results.add(rs.getInt(i));
+				else
+					results.add(null);
+				i++;
+			}
+			
+			return results;
+			
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
 		return null;
-	}*/
+	}
 
 }

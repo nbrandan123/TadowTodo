@@ -89,7 +89,7 @@ class TestSQLite {
 	}
 
 	@Test
-	void testAddTaskD() {
+	void testAddTask() {
 		fail("Not yet implemented");
 	}
 
