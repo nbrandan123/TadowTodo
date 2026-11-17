@@ -150,6 +150,9 @@ class TestTeam {
 		assertTrue(team.getTeamUsers().containsAll(admins), "Admins are not users");
 	}
 
+	/**
+	 * Test {@code getTeamName()} method
+	 */
 	@Test
 	void testGetTeamName() {
 		// 1. Instantiate team
@@ -161,6 +164,9 @@ class TestTeam {
 		assertEquals("My Team", team.getTeamName(), "Team name not as assigned");
 	}
 
+	/**
+	 * Test {@code setTeamName()} method
+	 */
 	@Test
 	void testSetTeamName() {
 		// 1. Instantiate team
@@ -175,6 +181,9 @@ class TestTeam {
 		assertEquals("My Team 2", team.getTeamName(), "Team name not as assigned");
 	}
 
+	/**
+	 * Test {@code joinTeam()} method
+	 */
 	@Test
 	void testJoinTeam() {
 		// 1. Instantiate team
@@ -199,6 +208,9 @@ class TestTeam {
 		assertTrue(team.getTeamUsers().contains(newAdmin), "New admin not user");
 	}
 
+	/**
+	 * Test {@code isAdmin()} method
+	 */
 	@Test
 	void testIsAdmin() {
 		// 1. Instantiate team with admin

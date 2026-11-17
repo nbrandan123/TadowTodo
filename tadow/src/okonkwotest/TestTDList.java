@@ -18,6 +18,9 @@ import tadow.Team;
  */
 class TestTDList {
 
+	/**
+	 * Test the constructor
+	 */
 	@Test
 	void testTDList() {
 		// 1. Instantiate to-do list
@@ -27,6 +30,9 @@ class TestTDList {
 		assertTrue(list.getTdList().isEmpty(), "To-do list not empty");
 	}
 
+	/**
+	 * Test the {@code getTdList()} method
+	 */
 	@Test
 	void testGetTdList() {
 		// 1. Instantiate to-do list
@@ -36,6 +42,9 @@ class TestTDList {
 		assertTrue(list.getTdList().isEmpty(), "To-do list not empty");
 	}
 
+	/**
+	 * Test the {@code setTdList()} method
+	 */
 	@Test
 	void testSetTdList() {
 		// 1. Instantiate to-do list
@@ -52,6 +61,9 @@ class TestTDList {
 		assertEquals(tasks, list.getTdList(), "To-do list not as assigned");
 	}
 
+	/**
+	 * Test the {@code getlTitle()} method
+	 */
 	@Test
 	void testGetlTitle() {
 		// 1. Instantiate to-do list
@@ -61,6 +73,9 @@ class TestTDList {
 		assertEquals("Test List", list.getlTitle(), "Title not as assigned");
 	}
 
+	/**
+	 * Test the {@code setlTitle()} method
+	 */
 	@Test
 	void testSetlTitle() {
 		// 1. Instantiate to-do list
@@ -73,6 +88,9 @@ class TestTDList {
 		assertEquals("Test List 2", list.getlTitle(), "Title not as assigned");
 	}
 
+	/**
+	 * Test the {@code getlDesc()} method
+	 */
 	@Test
 	void testGetlDesc() {
 		// 1. Instantiate to-do list
@@ -82,6 +100,9 @@ class TestTDList {
 		assertEquals("", list.getlDesc(), "Description not as assigned");
 	}
 
+	/**
+	 * Test the {@code setlDesc()} method
+	 */
 	@Test
 	void testSetlDesc() {
 		// 1. Instantiate to-do list
@@ -94,6 +115,9 @@ class TestTDList {
 		assertEquals("Desc", list.getlDesc(), "Description not as assigned");
 	}
 
+	/**
+	 * Test the {@code addTask()} method
+	 */
 	@Test
 	void testAddTask() {
 		// 1. Instantiate to-do list
@@ -107,6 +131,9 @@ class TestTDList {
 		assertTrue(list.getTdList().contains(task), "Task not contained");
 	}
 
+	/**
+	 * Test the {@code delTask()} method
+	 */
 	@Test
 	void testDelTask() {
 		// 1. Instantiate to-do list
@@ -123,11 +150,17 @@ class TestTDList {
 		assertFalse(list.getTdList().contains(task), "Task not deleted");
 	}
 
+	/**
+	 * Test the {@code editTask()} method
+	 */
 	@Test
 	void testEditTask() {
 		fail("Not yet implemented");
 	}
 
+	/**
+	 * Test the {@code finTask()} method
+	 */
 	@Test
 	void testFinTask() {
 		// 1. Instantiate to-do list
@@ -144,6 +177,9 @@ class TestTDList {
 		assertEquals(2, task.gettStat(), "Task not completed");
 	}
 	
+	/**
+	 * Test the {@code isShared()} method
+	 */
 	@Test
 	void testIsShared() {
 		// 1. Instantiate to-do list
@@ -153,6 +189,9 @@ class TestTDList {
 		assertFalse(list.isShared(), "List shared");
 	}
 	
+	/**
+	 * Test the {@code setShared()} method
+	 */
 	@Test
 	void testSetShared() {
 		// 1. Instantiate to-do list
