@@ -2,6 +2,7 @@ package tadow;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A user of the application
@@ -157,6 +158,27 @@ public class User {
 	 */
 	public void setToDoLists(ArrayList<TDList> toDoLists) {
 		this.toDoLists = toDoLists;
+	}
+
+
+	/**
+	 * Two User objects are the same user when they have the same username.
+	 * (Team.isAdmin / Team.joinTeam rely on contains(), which uses equals().)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof User)) {
+			return false;
+		}
+		return Objects.equals(username, ((User) o).username);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(username);
 	}
 
 }

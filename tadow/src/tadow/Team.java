@@ -1,6 +1,5 @@
 package tadow;
 
-import tadow.User;
 import java.util.ArrayList;
 
 public class Team {
@@ -25,14 +24,19 @@ public class Team {
 	}
 	
 	/** Scenario B: creating a team with existing values 
-	 * from the database
+	 * from the database. Copies the lists so the caller's lists are not changed,
+	 * and makes sure every admin is also counted as a member (without duplicates).
 	 * */
 	public Team(String teamName, ArrayList<User> users, ArrayList<User> admins) {
 	    this.teamName = teamName;
-	    this.teamUsers = users;
-	    this.teamAdmins = admins;
+	    this.teamUsers = new ArrayList<>(users);
+	    this.teamAdmins = new ArrayList<>(admins);
 	    
-	    users.addAll(admins);
+	    for (User a : admins) {
+	        if (!teamUsers.contains(a)) {
+	            teamUsers.add(a);
+	        }
+	    }
 	}
 
 	// Getters and Setters
@@ -48,10 +52,15 @@ public class Team {
 		return teamAdmins;
 	}
 
+	/** Replaces the admin list. Every admin is also a member; someone who is no longer
+	 * an admin stays on the team as a regular member (they are not removed). */
 	public void setTeamAdmins(ArrayList<User> teamAdmins) {
-		teamUsers.removeAll(this.teamAdmins); // Removes old admins
 		this.teamAdmins = teamAdmins;
-		teamUsers.addAll(teamAdmins); // Adds all admins as users
+		for (User a : teamAdmins) {
+			if (!teamUsers.contains(a)) {
+				teamUsers.add(a);
+			}
+		}
 	}
 
 	public String getTeamName() {
@@ -64,9 +73,12 @@ public class Team {
 
 	public void joinTeam(User e, boolean asAdmin) {
 		
-		teamUsers.add(e);
-		if (asAdmin)
+		if (!teamUsers.contains(e)) {
+			teamUsers.add(e);
+		}
+		if (asAdmin && !teamAdmins.contains(e)) {
 			teamAdmins.add(e);
+		}
 		
 		/* This rest of this part will need to be programmed once SQLite database is set up
 		 */

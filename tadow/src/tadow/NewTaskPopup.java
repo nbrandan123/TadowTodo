@@ -2,47 +2,52 @@ package tadow;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Window;
+import java.util.function.Consumer;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
 import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
+/**
+ * Dialog for creating a new task, or editing an existing one.
+ */
 public class NewTaskPopup extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
+	private final TDList targetList;
+	private final Task existing; // null when creating a new task
+	private final Consumer<Task> onSaved;
+
 	private JTextField textTaskTitle;
 	private JTextField textTaskDesc;
 	private JTextField textDueDate;
 	private JTextField textFreq;
+	private JRadioButton rdbtnIsRecur;
 
 	/**
-	 * Launch the application.
+	 * @param owner      window the dialog is centered on (Main's frame)
+	 * @param targetList the list the task belongs to (the list selected in Main)
+	 * @param existing   the task to edit, or null to create a new task
+	 * @param onSaved    called after the task is saved, with the saved task (its id is set); may be null
 	 */
-	public static void main(String[] args) {
-		try {
-			NewTaskPopup dialog = new NewTaskPopup();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	public NewTaskPopup(Window owner, TDList targetList, Task existing, Consumer<Task> onSaved) {
+		super(owner, existing == null ? "New Task" : "Edit Task", ModalityType.APPLICATION_MODAL);
+		this.targetList = targetList;
+		this.existing = existing;
+		this.onSaved = onSaved;
 
-	/**
-	 * Create the dialog.
-	 */
-	public NewTaskPopup() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 260);
+		setLocationRelativeTo(owner);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -52,132 +57,121 @@ public class NewTaskPopup extends JDialog {
 		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
-		{
-			JLabel lblTaskName = new JLabel("Task Name:");
-			GridBagConstraints gbc_lblTaskName = new GridBagConstraints();
-			gbc_lblTaskName.anchor = GridBagConstraints.EAST;
-			gbc_lblTaskName.insets = new Insets(0, 0, 5, 5);
-			gbc_lblTaskName.gridx = 0;
-			gbc_lblTaskName.gridy = 0;
-			contentPanel.add(lblTaskName, gbc_lblTaskName);
-		}
-		{
-			textTaskTitle = new JTextField();
-			GridBagConstraints gbc_textTaskTitle = new GridBagConstraints();
-			gbc_textTaskTitle.insets = new Insets(0, 0, 5, 0);
-			gbc_textTaskTitle.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textTaskTitle.gridx = 1;
-			gbc_textTaskTitle.gridy = 0;
-			contentPanel.add(textTaskTitle, gbc_textTaskTitle);
-			textTaskTitle.setColumns(10);
-		}
-		{
-			JLabel lblTaskDesc = new JLabel("Description:");
-			GridBagConstraints gbc_lblTaskDesc = new GridBagConstraints();
-			gbc_lblTaskDesc.anchor = GridBagConstraints.EAST;
-			gbc_lblTaskDesc.insets = new Insets(0, 0, 5, 5);
-			gbc_lblTaskDesc.gridx = 0;
-			gbc_lblTaskDesc.gridy = 1;
-			contentPanel.add(lblTaskDesc, gbc_lblTaskDesc);
-		}
-		{
-			textTaskDesc = new JTextField();
-			GridBagConstraints gbc_textTaskDesc = new GridBagConstraints();
-			gbc_textTaskDesc.insets = new Insets(0, 0, 5, 0);
-			gbc_textTaskDesc.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textTaskDesc.gridx = 1;
-			gbc_textTaskDesc.gridy = 1;
-			contentPanel.add(textTaskDesc, gbc_textTaskDesc);
-			textTaskDesc.setColumns(10);
-		}
-		{
-			JLabel lblDueDate = new JLabel("Due Date:");
-			GridBagConstraints gbc_lblDueDate = new GridBagConstraints();
-			gbc_lblDueDate.anchor = GridBagConstraints.EAST;
-			gbc_lblDueDate.insets = new Insets(0, 0, 5, 5);
-			gbc_lblDueDate.gridx = 0;
-			gbc_lblDueDate.gridy = 2;
-			contentPanel.add(lblDueDate, gbc_lblDueDate);
-		}
-		{
-			textDueDate = new JTextField();
-			textDueDate.setText("Use MM/DD/HH Format");
-			GridBagConstraints gbc_textDueDate = new GridBagConstraints();
-			gbc_textDueDate.insets = new Insets(0, 0, 5, 0);
-			gbc_textDueDate.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textDueDate.gridx = 1;
-			gbc_textDueDate.gridy = 2;
-			contentPanel.add(textDueDate, gbc_textDueDate);
-			textDueDate.setColumns(10);
-		}
-		{
-			JLabel lblRecur = new JLabel("Is Repeated:");
-			GridBagConstraints gbc_lblRecur = new GridBagConstraints();
-			gbc_lblRecur.insets = new Insets(0, 0, 5, 5);
-			gbc_lblRecur.gridx = 0;
-			gbc_lblRecur.gridy = 3;
-			contentPanel.add(lblRecur, gbc_lblRecur);
-		}
-		{
-			JRadioButton rdbtnIsRecur = new JRadioButton("Task Repeats");
-			GridBagConstraints gbc_rdbtnIsRecur = new GridBagConstraints();
-			gbc_rdbtnIsRecur.insets = new Insets(0, 0, 5, 0);
-			gbc_rdbtnIsRecur.gridx = 1;
-			gbc_rdbtnIsRecur.gridy = 3;
-			contentPanel.add(rdbtnIsRecur, gbc_rdbtnIsRecur);
-		}
-		{
-			JLabel lblFreq = new JLabel("Frequency:");
-			GridBagConstraints gbc_lblFreq = new GridBagConstraints();
-			gbc_lblFreq.anchor = GridBagConstraints.EAST;
-			gbc_lblFreq.insets = new Insets(0, 0, 0, 5);
-			gbc_lblFreq.gridx = 0;
-			gbc_lblFreq.gridy = 4;
-			contentPanel.add(lblFreq, gbc_lblFreq);
-		}
-		{
-			textFreq = new JTextField();
-			GridBagConstraints gbc_textFreq = new GridBagConstraints();
-			gbc_textFreq.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFreq.gridx = 1;
-			gbc_textFreq.gridy = 4;
-			contentPanel.add(textFreq, gbc_textFreq);
-			textFreq.setColumns(10);
-		}
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {						
-						String taskTitle = textTaskTitle.getText();
-						String taskDesc = textTaskDesc.getText();
-						String dueDateStr = textDueDate.getText();
-						
-						Task newTask = new Task(taskTitle);
-						newTask.settDesc(taskDesc);
-						newTask.settDate(dueDateStr);
-						
-						SQLite.addTask(newTask, Main.getSelectedList());
-					}
-				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						dispose();
-					}
-				});
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
+
+		textTaskTitle = addRow("Task Name:", 0);
+		textTaskDesc = addRow("Description:", 1);
+		textDueDate = addRow("Due (MM/DD/YYYY):", 2);
+
+		JLabel lblRecur = new JLabel("Is Repeated:");
+		GridBagConstraints gbc_lblRecur = new GridBagConstraints();
+		gbc_lblRecur.anchor = GridBagConstraints.EAST;
+		gbc_lblRecur.insets = new Insets(0, 0, 5, 5);
+		gbc_lblRecur.gridx = 0;
+		gbc_lblRecur.gridy = 3;
+		contentPanel.add(lblRecur, gbc_lblRecur);
+
+		rdbtnIsRecur = new JRadioButton("Task Repeats");
+		GridBagConstraints gbc_rdbtnIsRecur = new GridBagConstraints();
+		gbc_rdbtnIsRecur.anchor = GridBagConstraints.WEST;
+		gbc_rdbtnIsRecur.insets = new Insets(0, 0, 5, 0);
+		gbc_rdbtnIsRecur.gridx = 1;
+		gbc_rdbtnIsRecur.gridy = 3;
+		contentPanel.add(rdbtnIsRecur, gbc_rdbtnIsRecur);
+
+		textFreq = addRow("Frequency:", 4);
+
+		// Frequency only matters when the task repeats
+		textFreq.setEnabled(false);
+		rdbtnIsRecur.addActionListener(e -> textFreq.setEnabled(rdbtnIsRecur.isSelected()));
+
+		JPanel buttonPane = new JPanel();
+		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		getContentPane().add(buttonPane, BorderLayout.SOUTH);
+
+		JButton okButton = new JButton("OK");
+		okButton.addActionListener(e -> saveTask());
+		okButton.setActionCommand("OK");
+		buttonPane.add(okButton);
+		getRootPane().setDefaultButton(okButton);
+
+		JButton cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(e -> dispose());
+		cancelButton.setActionCommand("Cancel");
+		buttonPane.add(cancelButton);
+
+		if (existing != null) {
+			textTaskTitle.setText(existing.gettTitle());
+			textTaskDesc.setText(existing.gettDesc());
+			textDueDate.setText(existing.gettDate());
+			rdbtnIsRecur.setSelected(existing.isRep());
+			textFreq.setText(existing.getRepInterval());
+			textFreq.setEnabled(existing.isRep());
 		}
 	}
 
+	/**
+	 * Adds a label + text field row to the form and returns the text field.
+	 */
+	private JTextField addRow(String labelText, int row) {
+		boolean last = (row == 4);
+
+		JLabel label = new JLabel(labelText);
+		GridBagConstraints gbc_label = new GridBagConstraints();
+		gbc_label.anchor = GridBagConstraints.EAST;
+		gbc_label.insets = new Insets(0, 0, last ? 0 : 5, 5);
+		gbc_label.gridx = 0;
+		gbc_label.gridy = row;
+		contentPanel.add(label, gbc_label);
+
+		JTextField field = new JTextField();
+		GridBagConstraints gbc_field = new GridBagConstraints();
+		gbc_field.insets = new Insets(0, 0, last ? 0 : 5, 0);
+		gbc_field.fill = GridBagConstraints.HORIZONTAL;
+		gbc_field.gridx = 1;
+		gbc_field.gridy = row;
+		contentPanel.add(field, gbc_field);
+		field.setColumns(10);
+		return field;
+	}
+
+	private void saveTask() {
+		String taskTitle = textTaskTitle.getText().trim();
+		if (taskTitle.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Please enter a task name.");
+			return;
+		}
+
+		String due = textDueDate.getText().trim();
+		if (!Task.isValidDate(due)) {
+			JOptionPane.showMessageDialog(this, "Please enter the due date as MM/DD/YYYY (for example 03/07/2026),\nor leave it blank.");
+			return;
+		}
+
+		// Build the task to save; the existing object is only used for its id and status
+		Task toSave = new Task(taskTitle);
+		toSave.settDesc(textTaskDesc.getText().trim());
+		toSave.settDate(Task.normalizeDate(due));
+		boolean repeats = rdbtnIsRecur.isSelected();
+		toSave.setRep(repeats);
+		toSave.setRepInterval(repeats ? textFreq.getText().trim() : "");
+
+		boolean ok;
+		if (existing == null) {
+			ok = SQLite.addTask(toSave, targetList); // also sets toSave's id
+		} else {
+			toSave.setId(existing.getId());
+			toSave.settStat(existing.gettStat());
+			ok = SQLite.updateTask(toSave);
+		}
+
+		if (!ok) {
+			JOptionPane.showMessageDialog(this, "Could not save the task.");
+			return;
+		}
+
+		if (onSaved != null) {
+			onSaved.accept(toSave);
+		}
+		dispose();
+	}
 }
