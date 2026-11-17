@@ -49,7 +49,8 @@ public class Main {
 	private final DefaultListModel<TDList> listModel = new DefaultListModel<>();
 
 	// Model for the tasks JTable (read-only cells)
-	private final DefaultTableModel taskModel = new DefaultTableModel(new String[] { "Task", "Due Date", "Status" }, 0) {
+	private final DefaultTableModel taskModel = new DefaultTableModel(new String[] { "Task", "Due Date", "Status" },
+			0) {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -96,7 +97,8 @@ public class Main {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(cards);
 
-		// Both cards are built once; the main card is just reloaded with data after each login
+		// Both cards are built once; the main card is just reloaded with data after
+		// each login
 		initLoginCard();
 		initMainCard();
 		frame.getContentPane().add(cardLogin, CARD_LOGIN);
@@ -297,9 +299,9 @@ public class Main {
 	// =====================================================================
 
 	/**
-	 * A header row: a title on the left and small buttons on the right.
-	 * Lives outside the scroll pane, because a JTable puts its own column
-	 * header into its scroll pane and would replace this one.
+	 * A header row: a title on the left and small buttons on the right. Lives
+	 * outside the scroll pane, because a JTable puts its own column header into its
+	 * scroll pane and would replace this one.
 	 */
 	private JPanel buildHeader(String title, JButton... buttons) {
 		JPanel head = new JPanel(new BorderLayout(6, 0));
@@ -391,8 +393,8 @@ public class Main {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public Component getTableCellRendererComponent(JTable t, Object value, boolean isSelected,
-					boolean hasFocus, int row, int column) {
+			public Component getTableCellRendererComponent(JTable t, Object value, boolean isSelected, boolean hasFocus,
+					int row, int column) {
 				Component c = super.getTableCellRendererComponent(t, value, isSelected, hasFocus, row, column);
 				if (!isSelected) {
 					Color fg = t.getForeground();
@@ -455,8 +457,8 @@ public class Main {
 				JOptionPane.showMessageDialog(frame, "Select a task first.");
 				return;
 			}
-			int answer = JOptionPane.showConfirmDialog(frame, "Delete \"" + task.gettTitle() + "\"?",
-					"Delete task", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+			int answer = JOptionPane.showConfirmDialog(frame, "Delete \"" + task.gettTitle() + "\"?", "Delete task",
+					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 			if (answer == JOptionPane.YES_OPTION) {
 				if (!SQLite.deleteTask(task)) {
 					JOptionPane.showMessageDialog(frame, "Could not delete the task.");

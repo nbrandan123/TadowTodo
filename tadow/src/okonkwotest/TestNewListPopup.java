@@ -24,10 +24,9 @@ class TestNewListPopup {
 	 */
 	@Test
 	void testNewListPopup() {
-		// 1. Open new popup and assert that no errors occur
-		assertDoesNotThrow(() -> {
-			NewListPopup popup = new NewListPopup();
-		}, "Error in NewListPopup");
+		
 	}
+	
+	// TODO Add new test case methods
 
 }

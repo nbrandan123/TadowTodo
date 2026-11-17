@@ -102,7 +102,7 @@ class TestTeam {
 		// 1. Instantiate team
 		ArrayList<User> users = new ArrayList<>();
 		ArrayList<User> admins = new ArrayList<>();
-		admins.add(new User(null, null, null, null, null, null));
+		admins.add(new User("User 1", null, null, null, null, null));
 		Team team = new Team("My Team", users, admins);
 		
 		// 2. Assert that there is only one admin
@@ -111,9 +111,9 @@ class TestTeam {
 		// 3. Instantiate new team
 		ArrayList<User> users2 = new ArrayList<>();
 		ArrayList<User> admins2 = new ArrayList<>();
-		admins2.add(new User(null, null, null, null, null, null));
-		admins2.add(new User(null, null, null, null, null, null));
-		admins2.add(new User(null, null, null, null, null, null));
+		admins2.add(new User("User 2", null, null, null, null, null));
+		admins2.add(new User("User 3", null, null, null, null, null));
+		admins2.add(new User("User 4", null, null, null, null, null));
 		Team team2 = new Team("My Team", users2, admins2);
 		
 		// 4. Assert that there are 3 admins

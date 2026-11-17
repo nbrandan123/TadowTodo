@@ -90,7 +90,7 @@ class TestTask {
 		Task task = new Task("Test Task");
 		
 		// 2. Set to new date
-		Date myDate = new Date(1, 2, 3);
+		String myDate = "01/01/2000";
 		task.settDate(myDate);
 		
 		// 2. Assert that the date is set
@@ -145,7 +145,7 @@ class TestTask {
 		Task task = new Task("Test Task");
 		
 		// 2. Assert that repetition interval is default
-		assertEquals(new Date(0,0,0), task.getRepInterval(), "Repetition interval not default");
+		assertEquals("", task.getRepInterval(), "Repetition interval not default");
 	}
 	
 	@Test
@@ -154,7 +154,7 @@ class TestTask {
 		Task task = new Task("Test Task");
 		
 		// 2. Set new repetition interval
-		Date myDate = new Date(1, 2, 3);
+		String myDate = "3 days";
 		task.setRepInterval(myDate);
 		
 		// 3. Assert that repetition interval is new

@@ -36,22 +36,10 @@ public class NewListPopup extends JDialog {
 	 * @param existing the list to edit, or null to create a new list
 	 * @param onSaved called after the list is saved, with the saved list (its id is set); may be null
 	 */
-<<<<<<< HEAD
-	/*public static void main(String[] args) {
-		try {
-			NewListPopup dialog = new NewListPopup();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
-=======
 	public NewListPopup(Window owner, TDList existing, Consumer<TDList> onSaved) {
 		super(owner, existing == null ? "New List" : "Edit List", ModalityType.APPLICATION_MODAL);
 		this.existing = existing;
 		this.onSaved = onSaved;
->>>>>>> 23a8c0f9c19808aeb019bfaf41f629bc41c72cfb
 
 		setBounds(100, 100, 450, 240);
 		setLocationRelativeTo(owner);

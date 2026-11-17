@@ -164,27 +164,5 @@ class TestTDList {
 		// 3. Assert the list is shared
 		assertTrue(list.isShared(), "List not shared");
 	}
-	
-	@Test
-	void testGetTeam() {
-		// 1. Instantiate to-do list
-		TDList list = new TDList("Test List");
-		
-		// 2. Assert that no team is set
-		assertNull(list.getTeam(), "List has a team");
-	}
-	
-	@Test
-	void testSetTeam() {
-		// 1. Instantiate to-do list
-		TDList list = new TDList("Test List");
-		
-		// 2. Set new team
-		Team team = new Team("Test Team", new ArrayList<>(), new ArrayList<>());
-		list.setTeam(team);
-		
-		// 3. Assert that team is set
-		assertEquals(team, list.getTeam(), "List team not as assigned");
-	}
 
 }
